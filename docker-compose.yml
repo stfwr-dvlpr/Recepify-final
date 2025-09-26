@@ -9,7 +9,7 @@ services:
     environment:
       # --- Database Configuration ---
       # Note: We use 'db:3306' instead of 'localhost:3306'
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/recipe_finder_db?useSSL=false&serverTimezone=UTC
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/recipe_finder_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
       - SPRING_DATASOURCE_USERNAME=${DB_USERNAME}
       - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
       
