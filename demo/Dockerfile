@@ -25,4 +25,4 @@ EXPOSE 8081
 
 # Command to run the application
 # Make sure to replace 'demo-0.0.1-SNAPSHOT.jar' with your actual JAR file name
-CMD ["java", "-jar", "target/*.jar"]
+CMD ["java", "-jar", "target/spring-boot-starter-parent-3.5.6.jar"]
