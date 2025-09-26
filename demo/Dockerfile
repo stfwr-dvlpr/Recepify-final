@@ -1,5 +1,5 @@
 # Use a slim OpenJDK base image
-FROM openjdk:17-slim
+FROM openjdk:21-slim
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -7,6 +7,8 @@ WORKDIR /app
 # Copy the Maven wrapper and pom.xml to leverage Docker cache
 COPY .mvn/ .mvn
 COPY mvnw pom.xml ./
+
+RUN chmod +x ./mvnw
 
 # Download dependencies
 RUN ./mvnw dependency:go-offline

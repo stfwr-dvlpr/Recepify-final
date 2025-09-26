@@ -31,7 +31,7 @@ services:
       context: ./Recipify # Path to the frontend Dockerfile
       args:
         # This argument passes the backend URL to the frontend build
-        VITE_API_URL: http://34.235.114.7
+        VITE_API_BASE_URL: /api
     ports:
       - "80:80" # Map host port 80 to container port 80 (Nginx default)
     depends_on:
