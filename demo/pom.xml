@@ -11,7 +11,6 @@
 	<groupId>com.example</groupId>
 	<artifactId>demo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
 	<name>recipe-finder</name>
 	<description>Food recipe finder</description>
 	<url/>
