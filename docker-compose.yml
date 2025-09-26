@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./demo
+    ports:
+      - "8081:8081"
+    environment:
+      # --- Database Configuration ---
+      # Note: We use 'db:3306' instead of 'localhost:3306'
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/recipe_finder_db?useSSL=false&serverTimezone=UTC
+      - SPRING_DATASOURCE_USERNAME=${DB_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+      
+      # --- JWT Configuration ---
+      - JWT_SECRET=${JWT_SECRET_KEY}
+      - JWT_EXPIRATIONMS=86400000
+      
+      # --- Gemini API Configuration ---
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      
+      # --- CORS Configuration ---
+      # Use the public IP or domain of your EC2 instance here
+      - CORS_ALLOWEDORIGIN=http://34.235.114.7
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./Recipify # Path to the frontend Dockerfile
+      args:
+        # This argument passes the backend URL to the frontend build
+        VITE_API_URL: http://34.235.114.7
+    ports:
+      - "80:80" # Map host port 80 to container port 80 (Nginx default)
+    depends_on:
+      - backend
+
+  db:
+    image: mysql:8.0
+    cap_add:
+      - SYS_NICE # A fix for a potential MySQL 8 bug
+    environment:
+      - MYSQL_DATABASE=recipe_finder_db
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD} # Use the same password as the backend
+    ports:
+      - "3306:3306" # Optional: map port to host for external access/debugging
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
